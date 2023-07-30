@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  getMovieCredits,
-  getMovieDetails,
-  getMovieReviews,
-  getMoviesTrending,
-  searchMovie,
-} from '../services/API_themoviedb';
+import { getMoviesTrending } from '../services/API_themoviedb';
 import { Link } from 'react-router-dom';
 export const Home = () => {
   const [trending, setTrending] = useState([]);
