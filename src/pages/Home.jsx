@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getMoviesTrending } from '../services/API_themoviedb';
 // import { useLocation } from 'react-router-dom';
 import { SimpleCarousel } from './SimpleCarousel';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
   const [trending, setTrending] = useState([]);
@@ -16,8 +17,8 @@ export const Home = () => {
   return (
     <main>
       <h1>Trending today</h1>
-
-      {/* <ul>
+      <SimpleCarousel trending={trending} />
+      <ul>
         {trending.map(({ title, id, poster_path }) => {
           return (
             <li key={id}>
@@ -31,8 +32,7 @@ export const Home = () => {
             </li>
           );
         })}
-      </ul> */}
-      <SimpleCarousel trending={trending} />
+      </ul>
     </main>
   );
 };
