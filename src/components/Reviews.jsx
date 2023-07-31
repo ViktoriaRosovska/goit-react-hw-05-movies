@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getMovieReviews } from 'services/API_themoviedb';
 
 const Reviews = () => {
-  const [showBtn, setShowBtn] = useState(true);
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
   const onComponentHide = () => {
-    setShowBtn(false);
+    return navigate(`${location.state.from}`, { replace: true });
   };
 
   useEffect(() => {
@@ -15,28 +16,24 @@ const Reviews = () => {
       console.log(results);
       setReviews(results);
     });
-
-    return setShowBtn(true);
-  }, [setShowBtn, movieId]);
+  }, [movieId]);
 
   return (
-    showBtn && (
-      <div>
-        <div>Отзывы посетителей</div>
-        <button onClick={onComponentHide}>Свернуть</button>
-        <ul>
-          {reviews &&
-            reviews.map(({ content, id, author, url }) => {
-              return (
-                <li key={id}>
-                  <h2>{author}</h2>
-                  <p>{content}</p>
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-    )
+    <div>
+      <div>Отзывы посетителей</div>
+      <button onClick={onComponentHide}>X</button>
+      <ul>
+        {reviews &&
+          reviews.map(({ content, id, author, url }) => {
+            return (
+              <li key={id}>
+                <h2>{author}</h2>
+                <p>{content}</p>
+              </li>
+            );
+          })}
+      </ul>
+    </div>
   );
 };
 export { Reviews };

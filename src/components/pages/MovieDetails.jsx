@@ -5,10 +5,10 @@ import { getMovieDetails } from 'services/API_themoviedb';
 const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState({});
   const { movieId } = useParams();
-
   console.log(movieId);
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
+  console.log(backLinkHref);
   useEffect(() => {
     getMovieDetails(movieId).then(results => {
       console.log(results);
@@ -23,8 +23,12 @@ const MovieDetails = () => {
 
       {title}
       {id}
-      <Link to="cast">Cast</Link>
-      <Link to="reviews">Reviews</Link>
+      <Link to="cast" state={{ from: `/movies/${id}` }}>
+        Cast
+      </Link>
+      <Link to="reviews" state={{ from: `/movies/${id}` }}>
+        Reviews
+      </Link>
       <Outlet />
     </div>
   );

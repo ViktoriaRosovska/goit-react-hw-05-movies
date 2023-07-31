@@ -1,5 +1,7 @@
 @import-normalize; /* bring in normalize.css styles */
-
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,6 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(255, 255, 255);
 }
 
 code {
@@ -16,6 +19,7 @@ code {
 h2 {
   font-size: 10px;
 }
+
 img {
   display: inline-block;
   margin: 0;
@@ -102,4 +106,28 @@ img {
 
 .SliderMovie button::before {
   color: black;
+}
+
+.gridList {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+.gridList li {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid rgb(229, 87, 48);
+  border-radius: 20px;
+  /* background-color: rgba(230, 69, 88, 0.216); */
+}
+.gridList img {
+  width: 260px;
+  margin: 0;
+  padding: 0;
+  display: block;
 }

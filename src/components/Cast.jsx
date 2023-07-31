@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getMovieCredits } from 'services/API_themoviedb';
 
-const Cast = ({ stateBtn }) => {
-  const [showBtn, setShowBtn] = useState(true);
+const Cast = () => {
   const { movieId } = useParams();
   const [actors, setActors] = useState([]);
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const onComponentHide = () => {
-    setShowBtn(false);
+    return navigate(`${location.state.from}`, { replace: true });
   };
 
   useEffect(() => {
@@ -17,44 +17,41 @@ const Cast = ({ stateBtn }) => {
 
       setActors(cast);
     });
-    return setShowBtn(true);
-  }, [movieId, setShowBtn]);
+  }, [movieId]);
 
   return (
-    showBtn && (
-      <div>
-        <div>Актерский составй</div>
-        <button onClick={onComponentHide}>Свернуть</button>
-        <ul>
-          {actors &&
-            actors.map(({ character, name, id, profile_path }) => {
-              return (
-                <li key={id}>
-                  <h2>{character}</h2>
-                  <h3>{name}</h3>
-                  {profile_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w300/${profile_path}`}
-                      alt={name}
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        width: '300px',
-                        height: '450px',
-                        borderColor: '1px solid green',
-                        backgroundColor: 'gray',
-                      }}
-                    >
-                      Image not found
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-    )
+    <div>
+      <div>Актерский состав</div>
+      <button onClick={onComponentHide}>X</button>
+      <ul className="gridList">
+        {actors &&
+          actors.map(({ character, name, id, profile_path }) => {
+            return (
+              <li key={id}>
+                {profile_path ? (
+                  <img
+                    src={`https://image.tmdb.org/t/p/w300/${profile_path}`}
+                    alt={name}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: '300px',
+                      height: '450px',
+                      borderColor: '1px solid green',
+                      backgroundColor: 'gray',
+                    }}
+                  >
+                    Image not found
+                  </div>
+                )}
+                <h2>{character}</h2>
+                <h3>{name}</h3>
+              </li>
+            );
+          })}
+      </ul>
+    </div>
   );
 };
 
