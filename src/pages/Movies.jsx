@@ -1,62 +1,69 @@
 import { useDebounce } from 'hooks/useDebaunce';
 import { useEffect, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation, useSearchParams } from 'react-router-dom';
 import { searchMovie } from 'services/API_themoviedb';
 
 export const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [movies, setMovies] = useState([]);
-  // const [page, setPage] = useState(1);
-  const onChangeURL = e => {
-    // console.log(e.target.value.trim().toLowerCase());
-    setSearchQuery(e.target.value.trim().toLowerCase());
-  };
 
-  // const onLoadMore = () => {
-  //   setPage(prevPage => prevPage + 1);
-  // };
+  const [movies, setMovies] = useState([]);
 
   const search = useDebounce(searchQuery, 1000);
+  const location = useLocation();
+
+  const [params, setParams] = useSearchParams();
+  const querySearchParams = params.get('query');
+
+  const onChangeURL = e => {
+    setSearchQuery(e.target.value.trim().toLowerCase());
+    setParams({ query: e.target.value });
+  };
 
   useEffect(() => {
+    if (searchQuery === '' && querySearchParams !== null) {
+      setSearchQuery(querySearchParams);
+    }
     searchMovie(search).then(({ results }) => {
-      // console.log(results);
-      // setMovies(prevMovies => [...prevMovies, ...results]);
       setMovies(results);
     });
-  }, [search]);
+  }, [search, querySearchParams, searchQuery]);
 
   return (
     <main>
       <h1>Movie</h1>
-
-      <form>
-        <input type="text" onChange={onChangeURL} value={searchQuery} />
-      </form>
+      <input
+        type="text"
+        onChange={onChangeURL}
+        value={params.get('query') ?? ''}
+      />
       <ul>
         {movies &&
           movies.map(({ title, id, poster_path }) => {
             return (
               <li key={id}>
-                <Link to={`${id}`}>
+                <Link to={`${id}`} state={{ from: location }}>
                   <h2>{title}</h2>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
-                    alt={title}
-                  />
+                  {poster_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
+                      alt={title}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: '300px',
+                        height: '450px',
+                        borderColor: '1px solid green',
+                        backgroundColor: 'gray',
+                      }}
+                    >
+                      Image not found
+                    </div>
+                  )}
                 </Link>
               </li>
             );
           })}
-      </ul>
-      {/* <button onClick={onLoadMore}>Load more</button> */}
-      <ul>
-        <li>
-          <Link to="cast">Cast</Link>
-        </li>
-        <li>
-          <Link to="reviews">Review</Link>
-        </li>
       </ul>
       <Outlet />
     </main>

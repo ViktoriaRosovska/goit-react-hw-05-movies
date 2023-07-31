@@ -1,28 +1,23 @@
 import { useEffect, useState } from 'react';
 import { getMoviesTrending } from '../services/API_themoviedb';
-import { Link } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
+import { SimpleCarousel } from './SimpleCarousel';
+
 export const Home = () => {
   const [trending, setTrending] = useState([]);
-
+  // const location = useLocation();
+  // const backLinkHref = location.state?.from ?? '/';
   useEffect(() => {
     getMoviesTrending().then(({ results }) => {
       setTrending(results);
     });
   }, []);
 
-  // const movieCredits = getMovieCredits('496450').then(({ cast }) =>
-  //   console.log(cast)
-  // );
-  // console.log(movieCredits);
-  // const movieReviews = getMovieReviews('414906').then(data =>
-  //   console.log(data)
-  // );
-  // console.log(movieReviews);
-
   return (
     <main>
       <h1>Trending today</h1>
-      <ul>
+
+      {/* <ul>
         {trending.map(({ title, id, poster_path }) => {
           return (
             <li key={id}>
@@ -36,7 +31,8 @@ export const Home = () => {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
+      <SimpleCarousel trending={trending} />
     </main>
   );
 };
