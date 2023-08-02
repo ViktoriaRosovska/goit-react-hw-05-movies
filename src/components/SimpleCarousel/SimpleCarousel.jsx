@@ -1,8 +1,8 @@
 import React from 'react';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
+import { ImgWrapper, MovieWrapper, SliderMovie } from './SimpleCarousel.styled';
 
 const SimpleCarousel = ({ trending }) => {
   const settings = {
@@ -19,24 +19,24 @@ const SimpleCarousel = ({ trending }) => {
   };
 
   return (
-    <Slider {...settings} className="SliderMovie">
+    <SliderMovie {...settings}>
       {trending.map(({ title, id, poster_path, release_date }) => {
         return (
-          <div key={id} className="movieWrapper">
+          <MovieWrapper key={id}>
             <Link to={`/movies/${id}`}>
-              <div className="imgWrapper">
+              <ImgWrapper>
                 <img
                   src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
                   alt={title}
                 />
                 <h2>{title}</h2>
                 <p>Release date: {release_date}</p>
-              </div>
+              </ImgWrapper>
             </Link>
-          </div>
+          </MovieWrapper>
         );
       })}
-    </Slider>
+    </SliderMovie>
   );
 };
 export { SimpleCarousel };
