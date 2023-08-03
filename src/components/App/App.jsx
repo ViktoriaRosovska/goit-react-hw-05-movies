@@ -4,14 +4,15 @@ import { Route, Routes } from 'react-router-dom';
 import { Container, MainContainerApp } from './App.styled';
 import { useState } from 'react';
 import { darkTheme, lightTheme, globalTheme } from 'styles/theme';
-import { ThemeProvider } from 'styled-components';
+
 import SharedLayout from 'components/SharedLayout/SharedLayout';
+import { ThemeProvider } from 'styled-components';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
 const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
-const Cast = lazy(() => import('components/Cast'));
-const Reviews = lazy(() => import('components/Reviews'));
+const Cast = lazy(() => import('components/Cast/Cast'));
+const Reviews = lazy(() => import('components/Reviews/Reviews'));
 
 export function App() {
   const [theme, setTheme] = useState('light');

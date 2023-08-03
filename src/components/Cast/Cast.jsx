@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import imgNotFound from '../img/imgnotfound.jpg';
+import imgNotFound from '../../img/imgnotfound.jpg';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getMovieCredits } from 'services/API_themoviedb';

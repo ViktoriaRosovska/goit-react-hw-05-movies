@@ -1,7 +1,6 @@
+import styled from '@emotion/styled';
 import Slider from 'react-slick';
 import { globalTheme, lightTheme } from 'styles/theme';
-
-const { styled } = require('styled-components');
 
 const SliderMovie = styled(Slider)`
   width: 885px;
