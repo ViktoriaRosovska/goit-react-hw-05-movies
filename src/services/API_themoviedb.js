@@ -15,9 +15,9 @@ const config = {
   accept: 'application/json',
 };
 
-const getMoviesTrending = async () => {
+const getMoviesTrending = async (period = 'day') => {
   try {
-    const { data } = await axios.get(`/trending/movie/day?`, config);
+    const { data } = await axios.get(`/trending/movie/${period}?`, config);
     return data;
   } catch (error) {
     throw new Error('Oops, there is no movies');

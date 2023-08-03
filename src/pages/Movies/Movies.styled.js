@@ -6,10 +6,10 @@ const ContainerMovie = styled(Container)`
 
 const MovieSearch = styled.input`
   display: inline-block;
-  width: 500px;
+  width: 100%;
   height: 40px;
   border-radius: 15px;
-  border: 2px solid #142253;
+  border: 2px solid ${props => props.theme.accent};
   padding-left: 20px;
   padding-right: 60px;
   font-size: 20px;
@@ -32,10 +32,13 @@ const SearchWrapper = styled.div`
     right: 10px;
     transform: translateY(-50%);
     & svg {
-      fill: #142253;
+      fill: ${props => props.theme.accent};
       width: 30px;
       height: 30px;
     }
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
   }
 `;
 export { MovieSearch, SearchWrapper, ContainerMovie };

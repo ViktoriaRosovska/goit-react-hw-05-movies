@@ -1,31 +1,21 @@
 import foxlogo from 'img/fox.png';
-import { MainContainer } from 'components/App/App.styled';
-import { ContainerHeader, HeaderLink, Logo, Navigation } from './Header.styled';
+import { HeaderLink, Logo, LogoText, Navigation } from './Header.styled';
 import SearchIcon from '@mui/icons-material/Search';
-const { Outlet } = require('react-router-dom');
 
-const Header = () => {
+function Header() {
   return (
-    <>
-      <MainContainer>
-        <ContainerHeader>
-          <Navigation>
-            <Logo>
-              <img src={foxlogo} alt="logo fox" />
-              <span>FoxyMovies</span>
-            </Logo>
-
-            <HeaderLink to="/">Home</HeaderLink>
-            <HeaderLink to="/movies">
-              <SearchIcon />
-              &nbsp;Movies
-            </HeaderLink>
-          </Navigation>
-        </ContainerHeader>
-      </MainContainer>
-      <Outlet />
-    </>
+    <Navigation>
+      <Logo>
+        <img src={foxlogo} alt="logo fox" />
+        <LogoText>FoxyMovies</LogoText>
+      </Logo>
+      <HeaderLink to="/">Home</HeaderLink>
+      <HeaderLink to="/movies">
+        <SearchIcon />
+        &nbsp;Movies
+      </HeaderLink>
+    </Navigation>
   );
-};
+}
 
 export { Header };

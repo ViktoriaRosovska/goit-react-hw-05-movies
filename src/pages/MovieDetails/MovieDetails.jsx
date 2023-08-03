@@ -1,46 +1,97 @@
-import { Container, MainContainer } from 'components/App/App.styled';
 import { useEffect, useState } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieDetails } from 'services/API_themoviedb';
-import { ContainerDetails } from './MovieDetails.styled';
+import {
+  About,
+  AboutLinks,
+  DetailsInfo,
+  DetailsWrapper,
+  GoBackLink,
+} from './MovieDetails.styled';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState({});
   const { movieId } = useParams();
-  console.log(movieId);
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
-  console.log(backLinkHref);
+
   useEffect(() => {
     getMovieDetails(movieId).then(results => {
-      console.log(results);
       setMovieDetails(results);
     });
   }, [movieId]);
-  console.log(movieDetails);
-  const { title, id, release_date, poster_path } = movieDetails;
+
+  const {
+    title,
+    id,
+    release_date,
+    poster_path,
+    production_countries,
+    vote_average,
+    overview,
+    original_language,
+    budget,
+    homepage,
+  } = movieDetails;
+  const prod = production_countries?.map(el => el.name).join(', ');
   return (
     <div>
-      <MainContainer>
-        <ContainerDetails>
-          <Link to={backLinkHref}>Go to previous page</Link>
-
-          {title}
-          {id}
-          {release_date}
+      <GoBackLink to={backLinkHref}>
+        <ArrowBackIcon /> Go to previous page
+      </GoBackLink>
+      <DetailsWrapper>
+        <div>
           <img
             src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
             alt={title}
           />
-          <Link to="cast" state={{ from: `/movies/${id}` }}>
-            Cast
-          </Link>
-          <Link to="reviews" state={{ from: `/movies/${id}` }}>
-            Reviews
-          </Link>
-        </ContainerDetails>
-      </MainContainer>
-      <Outlet />
+        </div>
+        <DetailsInfo>
+          <h2>"{title}"</h2>
+          <p>
+            Release date: <b>{release_date}</b>
+          </p>
+          <p>
+            Productions countries: <b>{prod}</b>
+          </p>
+          <p>
+            Rating: <b>{vote_average}</b>
+          </p>
+          <p>
+            <b>Overview:</b> {overview}
+          </p>
+          <p>
+            Original language: <b>{original_language}</b>
+          </p>
+          <p>
+            <b>Budget:</b> {budget}$
+          </p>
+          <p>
+            Home page:{' '}
+            <a
+              href={homepage}
+              target="_blank"
+              rel="noreferrer noopenner"
+              className="homepage"
+            >
+              {homepage}
+            </a>
+          </p>
+          <AboutLinks>
+            {' '}
+            <About to="cast" state={{ from: `/movies/${id}` }}>
+              Cast
+            </About>
+            <About to="reviews" state={{ from: `/movies/${id}` }}>
+              Reviews
+            </About>
+          </AboutLinks>
+        </DetailsInfo>
+      </DetailsWrapper>
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 };

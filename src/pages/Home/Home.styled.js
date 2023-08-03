@@ -1,8 +1,12 @@
-const { styled } = require('styled-components');
+import { Select } from '@mui/material';
+
+import styled from '@emotion/styled';
+import { lightTheme, globalTheme } from 'styles/theme';
 
 const GridList = styled.ul`
   margin-top: 50px;
   display: grid;
+  justify-items: center;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   & li {
@@ -25,21 +29,36 @@ const GridList = styled.ul`
   }
   & img:hover {
     scale: 1.02;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: ${props =>
+      props.theme === lightTheme
+        ? globalTheme.boxShadow.lt
+        : globalTheme.boxShadow.dt};
   }
   & h2 {
     font-size: 15px;
-    color: #142253;
+    color: ${props => props.theme.accent};
     text-align: center;
   }
   & h2:hover {
-    color: orange;
+    color: ${props => props.theme.hover};
   }
 `;
 const PageTitle = styled.h1`
   text-align: right;
   padding-top: 40px;
   padding-bottom: 20px;
-  color: #142253;
+  color: ${props => props.theme.accent};
 `;
-export { GridList, PageTitle };
+
+const CustomSelect = styled(Select)`
+  height: 30px;
+  width: 90px;
+  margin-left: calc(100% - 90px);
+  margin-top: 20px;
+  background-color: ${props => props.theme.accent};
+  color: ${props => props.theme.body};
+  & svg {
+    color: ${props => props.theme.body};
+  }
+`;
+export { GridList, PageTitle, CustomSelect };

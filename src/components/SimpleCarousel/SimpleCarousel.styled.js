@@ -1,4 +1,5 @@
 import Slider from 'react-slick';
+import { globalTheme, lightTheme } from 'styles/theme';
 
 const { styled } = require('styled-components');
 
@@ -6,15 +7,29 @@ const SliderMovie = styled(Slider)`
   width: 885px;
   margin-left: auto;
   margin-right: auto;
-  height: 540px;
+  max-height: 540px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-bottom: 80px;
   & button::before {
-    color: #142253;
+    color: ${props => props.theme.accent};
     opacity: 1;
   }
+  @media screen and (min-width: 768px) and (max-width: 1200px) {
+    width: 600px;
+
+    height: auto;
+  }
+  @media screen and (min-width: 600px) and (max-width: 768px) {
+    width: 500px;
+
+    height: auto;
+  }
+  @media screen and (min-width: 320px) and (max-width: 600px) {
+    max-width: 200px;
+  }
+
   & .slick-track {
     display: flex;
     flex-direction: row;
@@ -25,10 +40,23 @@ const SliderMovie = styled(Slider)`
 
   & .slick-slide {
     transition: width 400ms ease-out;
+    @media screen and (min-width: 768px) and (max-width: 1200px) {
+      width: 160px;
+    }
   }
   & .slick-current img {
     width: 260px;
-    height: fit-content;
+
+    @media screen and (max-width: 1200px) {
+      width: 200px;
+    }
+    @media screen and (max-width: 1200px) {
+      width: 200px;
+    }
+  }
+
+  & .slick-dots li button:before {
+    color: ${props => props.theme.accent}!important;
   }
 `;
 
@@ -39,6 +67,7 @@ const MovieWrapper = styled.div`
   & p {
     font-size: 10px;
     color: rgb(138, 135, 135);
+
     display: flex;
     justify-content: center;
     padding: 0;
@@ -74,6 +103,7 @@ const MovieWrapper = styled.div`
     display: block;
     margin-left: auto;
     margin-right: auto;
+    color: ${props => props.theme.accent};
   }
 `;
 
@@ -82,7 +112,10 @@ const ImgWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   & img:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: ${props =>
+      props.theme === lightTheme
+        ? globalTheme.boxShadow.lt
+        : globalTheme.boxShadow.dt};
     scale: 1.02;
   }
 `;

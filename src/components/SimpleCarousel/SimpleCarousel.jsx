@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -16,6 +17,42 @@ const SimpleCarousel = ({ trending }) => {
     autoplay: true,
     pauseOnHover: true,
     autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 2,
+          centerMode: false,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          centerMode: false,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 320,
+        settings: {
+          slidesToShow: 1,
+          centerMode: false,
+          slidesToScroll: 1,
+          dots: false,
+        },
+      },
+    ],
   };
 
   return (
@@ -39,4 +76,9 @@ const SimpleCarousel = ({ trending }) => {
     </SliderMovie>
   );
 };
+
+SimpleCarousel.propTypes = {
+  trending: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 export { SimpleCarousel };
