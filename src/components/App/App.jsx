@@ -9,6 +9,8 @@ import SharedLayout from 'components/SharedLayout/SharedLayout';
 import { ThemeProvider } from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 
+import { NotFound } from 'components/NotFound/NotFound';
+
 const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
 const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
@@ -84,7 +86,7 @@ export function App() {
               </Route>
             </Route>
 
-            <Route path="*" element={<div>Nothing not found</div>} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <ToastContainer
             icon={false}

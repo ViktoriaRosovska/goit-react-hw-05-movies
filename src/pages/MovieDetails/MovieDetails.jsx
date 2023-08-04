@@ -10,7 +10,7 @@ import {
 } from './MovieDetails.styled';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const MovieDetails = () => {
+const MovieDetails = ({ theme }) => {
   const [movieDetails, setMovieDetails] = useState({});
   const { movieId } = useParams();
   const location = useLocation();
@@ -37,17 +37,17 @@ const MovieDetails = () => {
   const prod = production_countries?.map(el => el.name).join(', ');
   return (
     <div>
-      <GoBackLink to={backLinkHref}>
+      <GoBackLink to={backLinkHref} theme={theme}>
         <ArrowBackIcon /> Go to previous page
       </GoBackLink>
-      <DetailsWrapper>
+      <DetailsWrapper theme={theme}>
         <div>
           <img
             src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
             alt={title}
           />
         </div>
-        <DetailsInfo>
+        <DetailsInfo theme={theme}>
           <h2>"{title}"</h2>
           <p>
             Release date: <b>{release_date}</b>
@@ -78,12 +78,12 @@ const MovieDetails = () => {
               {homepage}
             </a>
           </p>
-          <AboutLinks>
+          <AboutLinks theme={theme}>
             {' '}
-            <About to="cast" state={{ from: `/movies/${id}` }}>
+            <About theme={theme} to="cast" state={{ from: `/movies/${id}` }}>
               Cast
             </About>
-            <About to="reviews" state={{ from: `/movies/${id}` }}>
+            <About theme={theme} to="reviews" state={{ from: `/movies/${id}` }}>
               Reviews
             </About>
           </AboutLinks>

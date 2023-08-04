@@ -17,6 +17,7 @@ const SharedLayout = ({ toggleTheme, theme }) => {
       <Header toggleTheme={toggleTheme} theme={theme} />
       <main>
         <SwitchTheme onChange={onToggle} />
+
         <Outlet />
       </main>
     </Suspense>
