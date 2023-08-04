@@ -7,19 +7,29 @@ import { Link } from 'react-router-dom';
 
 import { CustomSelect, GridList, PageTitle } from './Home.styled';
 import { MenuItem } from '@mui/material';
+import { Loader } from 'components/Loader/Loader';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = ({ theme }) => {
   const [trending, setTrending] = useState([]);
   const [period, setPeriod] = useState('day');
+  const [isLoading, setIsLoading] = useState(true);
 
   const onSelectChange = e => {
     setPeriod(e.target.value);
   };
 
   useEffect(() => {
-    getMoviesTrending(period).then(({ results }) => {
-      setTrending(results);
-    });
+    try {
+      getMoviesTrending(period).then(({ results }) => {
+        setTrending(results);
+      });
+    } catch (error) {
+      toast.error('You have some error. Please, try reloading page');
+    } finally {
+      setIsLoading(false);
+    }
   }, [period]);
 
   return (
@@ -40,6 +50,7 @@ const Home = ({ theme }) => {
       ) : (
         <PageTitle theme={theme}>Trending for a week</PageTitle>
       )}
+      {isLoading && <Loader />}
       <SimpleCarousel trending={trending} theme={theme} />
       <GridList theme={theme}>
         {trending.map(({ title, id, poster_path }) => {

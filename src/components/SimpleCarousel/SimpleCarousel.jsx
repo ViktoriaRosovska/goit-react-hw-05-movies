@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
 import { ImgWrapper, MovieWrapper, SliderMovie } from './SimpleCarousel.styled';
 
-const SimpleCarousel = ({ trending }) => {
+const SimpleCarousel = ({ trending, theme }) => {
   const settings = {
     centerMode: true,
     centerPadding: '0px',
@@ -56,12 +56,12 @@ const SimpleCarousel = ({ trending }) => {
   };
 
   return (
-    <SliderMovie {...settings}>
+    <SliderMovie {...settings} theme={theme}>
       {trending.map(({ title, id, poster_path, release_date }) => {
         return (
-          <MovieWrapper key={id}>
+          <MovieWrapper key={id} theme={theme}>
             <Link to={`/movies/${id}`}>
-              <ImgWrapper>
+              <ImgWrapper theme={theme}>
                 <img
                   src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
                   alt={title}
@@ -79,6 +79,7 @@ const SimpleCarousel = ({ trending }) => {
 
 SimpleCarousel.propTypes = {
   trending: PropTypes.arrayOf(PropTypes.object).isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
 export { SimpleCarousel };

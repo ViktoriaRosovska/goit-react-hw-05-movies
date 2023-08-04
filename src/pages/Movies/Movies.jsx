@@ -8,9 +8,13 @@ import { searchMovie } from 'services/API_themoviedb';
 import { GridList, PageTitle } from '../Home/Home.styled';
 import { MovieSearch, SearchWrapper } from './Movies.styled';
 import SearchIcon from '@mui/icons-material/Search';
+import { Loader } from 'components/Loader/Loader';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Movies = ({ theme }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const [movies, setMovies] = useState([]);
 
@@ -26,19 +30,35 @@ const Movies = ({ theme }) => {
   };
 
   useEffect(() => {
-    if (searchQuery === '' && querySearchParams !== null) {
-      setSearchQuery(querySearchParams);
+    try {
+      if (searchQuery === '' && querySearchParams !== null) {
+        setSearchQuery(querySearchParams);
+      }
+
+      searchMovie(search).then(({ results }) => {
+        setMovies(results);
+        console.log(results.length);
+        if (search && results.length === 0) {
+          return toast.error(
+            `Oops, there are no movies with query ${searchQuery}`
+          );
+        }
+      });
+    } catch (error) {
+      return toast.error(
+        `There is some error in the application: "${error.message}"`
+      );
+    } finally {
+      setIsLoading(false);
     }
-    searchMovie(search).then(({ results }) => {
-      setMovies(results);
-    });
   }, [search, querySearchParams, searchQuery]);
 
   return (
     <>
       <PageTitle theme={theme}>Search movie</PageTitle>
-      <SearchWrapper>
+      <SearchWrapper theme={theme}>
         <MovieSearch
+          theme={theme}
           type="text"
           onChange={onChangeURL}
           value={params.get('query') ?? ''}
@@ -48,7 +68,7 @@ const Movies = ({ theme }) => {
           <SearchIcon />
         </div>
       </SearchWrapper>
-
+      {isLoading && <Loader />}
       <GridList theme={theme}>
         {movies &&
           movies.map(({ title, id, poster_path }) => {
@@ -77,6 +97,7 @@ const Movies = ({ theme }) => {
             );
           })}
       </GridList>
+
       <Outlet />
     </>
   );

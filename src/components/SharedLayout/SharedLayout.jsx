@@ -4,16 +4,17 @@ import { Outlet } from 'react-router-dom';
 import { Header } from '../Header/Header';
 
 import { SwitchTheme } from './SharedLayout.styled';
+import { Loader } from 'components/Loader/Loader';
 
-const SharedLayout = ({ toggleTheme }) => {
+const SharedLayout = ({ toggleTheme, theme }) => {
   const [isToggled, setIsToggled] = useState(true);
   const onToggle = () => {
     setIsToggled(!isToggled);
     toggleTheme();
   };
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Header toggleTheme={toggleTheme} />
+    <Suspense fallback={<Loader />}>
+      <Header toggleTheme={toggleTheme} theme={theme} />
       <main>
         <SwitchTheme onChange={onToggle} />
         <Outlet />
@@ -24,6 +25,7 @@ const SharedLayout = ({ toggleTheme }) => {
 
 SharedLayout.propTypes = {
   toggleTheme: PropTypes.func.isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
 export default SharedLayout;

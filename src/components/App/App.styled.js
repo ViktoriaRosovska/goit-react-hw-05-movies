@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { globalTheme } from 'styles/theme';
 
 const MainContainer = styled.section`
   margin: 0 auto;
@@ -22,7 +23,8 @@ const Container = styled.div`
     width: 1400px;
   }
   @media screen and (min-width: 320px) {
-    min-width: 320px;
+    // Не виходить передавати пропсами тему
+    min-width: ${props => globalTheme.breakpoints.xs};
   }
   @media (min-width: 768px) {
     width: 768px;

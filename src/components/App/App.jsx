@@ -7,6 +7,7 @@ import { darkTheme, lightTheme, globalTheme } from 'styles/theme';
 
 import SharedLayout from 'components/SharedLayout/SharedLayout';
 import { ThemeProvider } from 'styled-components';
+import { ToastContainer } from 'react-toastify';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
@@ -38,6 +39,7 @@ export function App() {
                 <SharedLayout
                   toggleTheme={toggleTheme}
                   globalTheme={globalTheme}
+                  theme={theme === 'light' ? lightTheme : darkTheme}
                 />
               }
             >
@@ -84,6 +86,13 @@ export function App() {
 
             <Route path="*" element={<div>Nothing not found</div>} />
           </Routes>
+          <ToastContainer
+            icon={false}
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={true}
+            theme="colored"
+          />
         </Container>
       </MainContainerApp>
     </ThemeProvider>

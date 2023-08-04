@@ -50,11 +50,6 @@ const HeaderLink = styled(NavLink)`
   align-items: center;
   height: fit-content;
   color: ${props => props.theme.accent};
-  &.active {
-    background-color: ${props => props.theme.accent};
-    border-radius: 15px;
-    color: white;
-  }
   &:active,
   &:hover,
   &:focus {
@@ -68,6 +63,12 @@ const HeaderLink = styled(NavLink)`
     padding-bottom: 5px;
     padding-left: 7px;
     padding-right: 7px;
+  }
+  & svg {
+    @media screen and (min-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
   }
 `;
 
