@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
 import { ImgWrapper, MovieWrapper, SliderMovie } from './SimpleCarousel.styled';
+import imgNotFound from '../../img/imgnotfound.jpg';
 
 const SimpleCarousel = ({ trending, theme }) => {
   const settings = {
@@ -62,10 +63,16 @@ const SimpleCarousel = ({ trending, theme }) => {
           <MovieWrapper key={id} theme={theme}>
             <Link to={`/movies/${id}`}>
               <ImgWrapper theme={theme}>
-                <img
-                  src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-                  alt={title}
-                />
+                {poster_path && (
+                  <img
+                    src={
+                      poster_path
+                        ? `https://image.tmdb.org/t/p/w300/${poster_path}`
+                        : imgNotFound
+                    }
+                    alt={title}
+                  />
+                )}
                 <h2>{title}</h2>
                 <p>Release date: {release_date}</p>
               </ImgWrapper>

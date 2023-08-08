@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getMovieReviews } from 'services/API_themoviedb';
-import { CloseButton, CollapseTitle } from '../Cast/Cast.styled';
+import { CloseLink, CollapseTitle } from '../Cast/Cast.styled';
 import CloseIcon from '@mui/icons-material/Close';
-
 import {
   AuthorRewiew,
   DateReview,
@@ -18,11 +17,6 @@ const Reviews = ({ theme }) => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
   const [isReviews, setIsReviews] = useState(true);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const onComponentHide = () => {
-    return navigate(`${location.state.from}`, { replace: true });
-  };
 
   useEffect(() => {
     getMovieReviews(movieId).then(({ results }) => {
@@ -33,9 +27,9 @@ const Reviews = ({ theme }) => {
 
   return (
     <>
-      <CloseButton onClick={onComponentHide} theme={theme}>
+      <CloseLink theme={theme} to={`/movies/${movieId}`}>
         <CloseIcon />
-      </CloseButton>
+      </CloseLink>
       <CollapseTitle theme={theme}>Reviews </CollapseTitle>
       {!isReviews && (
         <NoReview theme={theme}>
@@ -44,7 +38,7 @@ const Reviews = ({ theme }) => {
       )}
       <ul>
         {reviews &&
-          reviews.map(({ content, id, author, url, updated_at }) => {
+          reviews.map(({ content, id, author, updated_at }) => {
             return (
               <ItemReview key={id} theme={theme}>
                 <AuthorRewiew theme={theme}>{author}</AuthorRewiew>

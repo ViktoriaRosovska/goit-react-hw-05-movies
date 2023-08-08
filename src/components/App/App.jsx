@@ -24,16 +24,11 @@ export function App() {
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
 
+  const themeStyle = theme === 'light' ? lightTheme : darkTheme;
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <MainContainerApp
-        theme={theme === 'light' ? lightTheme : darkTheme}
-        globalTheme={globalTheme}
-      >
-        <Container
-          theme={theme === 'light' ? lightTheme : darkTheme}
-          globalTheme={globalTheme}
-        >
+    <ThemeProvider theme={themeStyle}>
+      <MainContainerApp theme={themeStyle} globalTheme={globalTheme}>
+        <Container theme={themeStyle} globalTheme={globalTheme}>
           <Routes>
             <Route
               path="/"
@@ -41,47 +36,24 @@ export function App() {
                 <SharedLayout
                   toggleTheme={toggleTheme}
                   globalTheme={globalTheme}
-                  theme={theme === 'light' ? lightTheme : darkTheme}
+                  theme={themeStyle}
                 />
               }
             >
               <Route
                 index
                 path="/"
-                element={
-                  <Home
-                    theme={theme === 'light' ? lightTheme : darkTheme}
-                    globalTheme={globalTheme}
-                  />
-                }
+                element={<Home theme={themeStyle} globalTheme={globalTheme} />}
               />
-              <Route
-                path="/movies"
-                element={
-                  <Movies theme={theme === 'light' ? lightTheme : darkTheme} />
-                }
-              />
+              <Route path="/movies" element={<Movies theme={themeStyle} />} />
               <Route
                 path="/movies/:movieId"
-                element={
-                  <MovieDetails
-                    theme={theme === 'light' ? lightTheme : darkTheme}
-                  />
-                }
+                element={<MovieDetails theme={themeStyle} />}
               >
-                <Route
-                  path="cast"
-                  element={
-                    <Cast theme={theme === 'light' ? lightTheme : darkTheme} />
-                  }
-                />
+                <Route path="cast" element={<Cast theme={themeStyle} />} />
                 <Route
                   path="reviews"
-                  element={
-                    <Reviews
-                      theme={theme === 'light' ? lightTheme : darkTheme}
-                    />
-                  }
+                  element={<Reviews theme={themeStyle} />}
                 />
               </Route>
             </Route>

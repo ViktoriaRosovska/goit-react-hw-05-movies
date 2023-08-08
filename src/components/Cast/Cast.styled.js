@@ -1,10 +1,5 @@
 import styled from '@emotion/styled';
-
-const { Container } = require('@mui/material');
-
-const ContainerCast = styled(Container)`
-  /* min-height: 1000px; */
-`;
+import { Link } from 'react-router-dom';
 
 const CollapseTitle = styled.h2`
   font-size: 30px;
@@ -12,7 +7,7 @@ const CollapseTitle = styled.h2`
   text-align: center;
   margin-bottom: 20px;
 `;
-const CloseButton = styled.button`
+const CloseLink = styled(Link)`
   background-color: transparent;
   border: transparent;
   width: 24px;
@@ -27,6 +22,7 @@ const CloseButton = styled.button`
   }
 `;
 const CharacterTitle = styled.h2`
+  margin-top: 20px;
   &.character {
     font-size: 20px;
     color: ${props => props.theme.accent};
@@ -39,10 +35,4 @@ const CharacterName = styled.h3`
   color: ${props => props.theme.text};
   font-weight: 500;
 `;
-export {
-  ContainerCast,
-  CollapseTitle,
-  CloseButton,
-  CharacterTitle,
-  CharacterName,
-};
+export { CollapseTitle, CloseLink, CharacterTitle, CharacterName };

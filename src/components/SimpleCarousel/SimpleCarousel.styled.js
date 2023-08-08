@@ -11,18 +11,19 @@ const SliderMovie = styled(Slider)`
   flex-direction: column;
   justify-content: center;
   margin-bottom: 80px;
-  & button::before {
+
+  & .slick-prev::before,
+  .slick-next::before {
     color: ${props => props.theme.accent};
     opacity: 1;
   }
+
   @media screen and (min-width: 768px) and (max-width: 1200px) {
     width: 600px;
-
     height: auto;
   }
   @media screen and (min-width: 600px) and (max-width: 768px) {
     width: 500px;
-
     height: auto;
   }
   @media screen and (min-width: 320px) and (max-width: 600px) {
@@ -53,7 +54,10 @@ const SliderMovie = styled(Slider)`
       width: 200px;
     }
   }
-
+  & .slick-dots li.slick-active button::before {
+    color: ${props => props.theme.accent}!important;
+    opacity: 1;
+  }
   & .slick-dots li button:before {
     color: ${props => props.theme.accent}!important;
   }
@@ -118,4 +122,5 @@ const ImgWrapper = styled.div`
     scale: 1.02;
   }
 `;
+
 export { SliderMovie, MovieWrapper, ImgWrapper };
