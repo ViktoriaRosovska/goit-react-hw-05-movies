@@ -63,16 +63,15 @@ const SimpleCarousel = ({ trending, theme }) => {
           <MovieWrapper key={id} theme={theme}>
             <Link to={`/movies/${id}`}>
               <ImgWrapper theme={theme}>
-                {poster_path && (
-                  <img
-                    src={
-                      poster_path
-                        ? `https://image.tmdb.org/t/p/w300/${poster_path}`
-                        : imgNotFound
-                    }
-                    alt={title}
-                  />
-                )}
+                <img
+                  src={
+                    poster_path
+                      ? `https://image.tmdb.org/t/p/w300/${poster_path}`
+                      : imgNotFound
+                  }
+                  alt={title}
+                />
+
                 <h2>{title}</h2>
                 <p>Release date: {release_date}</p>
               </ImgWrapper>

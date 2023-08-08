@@ -5,12 +5,13 @@ import { getMovieDetails } from 'services/API_themoviedb';
 import { GoBackLink } from './MovieDetails.styled';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { MovieDetailsWrapper } from 'components/MoviDetailsWrapper';
+import { useRef } from 'react';
 
 const MovieDetails = ({ theme }) => {
   const [movieDetails, setMovieDetails] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
-  const backLinkHref = location?.state?.from ?? '/';
+  const backLinkHref = useRef(location?.state?.from ?? '/');
 
   useEffect(() => {
     getMovieDetails(movieId).then(results => {
@@ -24,7 +25,7 @@ const MovieDetails = ({ theme }) => {
 
   return (
     <div>
-      <GoBackLink to={backLinkHref} theme={theme} state={{ from: location }}>
+      <GoBackLink to={backLinkHref.current} theme={theme}>
         <ArrowBackIcon /> Go to previous page
       </GoBackLink>
       <MovieDetailsWrapper theme={theme} movieDetails={movieDetails} />
